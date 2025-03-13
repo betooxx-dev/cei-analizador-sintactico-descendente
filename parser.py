@@ -16,7 +16,14 @@ class Parser:
         self.error_message = ""
         self.parse_tree = []
         
+        for i, token in enumerate(self.tokens):
+            if token[0] == 'error':
+                self.error_message = f"Error léxico en línea {token[2]}, columna {token[3]}: Carácter no reconocido '{token[1]}'"
+                self.parse_tree.append(f"Error: {self.error_message}")
+                return False, self.parse_tree
+        
         stack = ['$', 'program']
+    
         
         while stack[-1] != '$':
             top = stack[-1]
